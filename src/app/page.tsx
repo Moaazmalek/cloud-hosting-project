@@ -1,9 +1,11 @@
-import Header from "@/components/Header"
+import Header from "@/components/header/Header"
 
 const HomePage = () => {
   return (
  <div>
-    <Header/>
+   
+    <h1>Home page</h1>
+    <p>Welcome to Next JS</p>
  </div>
   )
 }
