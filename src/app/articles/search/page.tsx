@@ -1,9 +1,18 @@
 import React from 'react'
+interface SearchArticlePageProps  {
+  params:{}
+  searchParams:{
+    searchText:string
+  }
 
-const SearchPage = () => {
+}
+const SearchArticlePage = ({params,searchParams}:SearchArticlePageProps) => {
+  
   return (
-    <div>SearchPage</div>
+   <section className="h-full px-5 container m-auto ">
+    {searchParams.searchText}
+   </section>
   )
 }
 
-export default SearchPage
+export default SearchArticlePage

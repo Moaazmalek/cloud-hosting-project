@@ -6,6 +6,8 @@ export type Article = {
     title: string;
     body: string;
   };
+
+
 export const LoginSchema=z.object({
   email:z.string().describe("Email").email({message:"Invalid Email"}).min(3,{message:"Email is required"}),
   password:z.string().describe("Password").min(6,"Password must be at least 6 charactesr")
@@ -21,5 +23,6 @@ export const RegisterSchema=z.object({
 })
 export const CreateArticleFormSchema =z.object({
   title:z.string().describe("Title").min(1,{message:"Title is required"}),
-  description:z.string().describe("Title").min(1,{message:"Description is required"}),
+  body:z.string().describe("Title").min(1,{message:"Description is required"}),
 })
+
