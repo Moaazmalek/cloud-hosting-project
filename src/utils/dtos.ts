@@ -5,5 +5,15 @@ import { CreateArticleFormSchema } from "./types";
 export  type CreateArticleDTO=z.infer<typeof CreateArticleFormSchema>;
 export interface UpdateArticleDto {
     title?:string,
-    body?:string
+    description?:string
+}
+export interface RegisterUserDto {
+    username:string,
+    email:string,
+    password:string,
+    confirmPassword:string
+}
+export interface LoginUserDto {
+    email:string,
+    password:string
 }

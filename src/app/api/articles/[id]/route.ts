@@ -2,6 +2,9 @@ import {NextRequest,NextResponse} from 'next/server'
 import { Articles } from '@/utils/data'
 import { UpdateArticleDto } from '@/utils/dtos';
 import { CreateArticleSchema } from '@/utils/validationSchemas';
+import { db } from '@/lib/database/db';
+import { ArticleTable } from '@/lib/drizzle/schema';
+import { eq } from 'drizzle-orm';
 interface Props {
 params:{
     id:string
@@ -13,14 +16,23 @@ params:{
 * @description GET Single article by id 
 * @access  public  
 */
-export function GET(request:NextRequest,{params:{id}}:Props) {
-    const article=Articles.find((a)  => a.id===parseInt(id));
-    if(!article) {
-        return NextResponse.json({message:"Article not found"},{status:404})
-    }
-    return NextResponse.json(article,{status:200})
+export async function GET(request:NextRequest,{params:{id}}:Props) {
+    
+      try {
 
-
+        const article=await db.query.ArticleTable.findFirst({
+            where:(article,{eq}) => eq(article.id,Number(id))
+           })
+         
+            if(!article){
+                return NextResponse.json({message:"article not found"},{status:404})
+            }
+            return NextResponse.json(article,{status:200})
+          
+      }catch(error) {
+        return NextResponse.json({message:"internal server error"},{status:500})
+        
+      }
 }
 
 /**
@@ -30,16 +42,31 @@ export function GET(request:NextRequest,{params:{id}}:Props) {
 * @access  public  
 */
 export async function PUT(request:NextRequest,{params:{id}}:Props) {
-    const body=await request.json() as UpdateArticleDto;
-    console.log(body)
-
-
-    const article=Articles.find((a)  => a.id===parseInt(id));
-    if(!article) {
-        return NextResponse.json({message:"Article not found"},{status:404})
+  try {
+    const articleId=parseInt(id)
+    if(isNaN(articleId)) {
+        return NextResponse.json({message:"Invalid article id"},{status:404})
     }
-    return NextResponse.json({message:"Article updated"},{status:200})
 
+    const {title,description}=await request.json() as UpdateArticleDto
+    if(!title || !description ){
+        return NextResponse.json({message:"title and description are required"},{status:404})
+    }
+
+    const updatedArticle=await db.update(ArticleTable).set({
+        ...(title && {title}),
+        ...(description && {description})
+    }).
+    where(eq(ArticleTable.id,articleId)).returning();
+    
+    if(updatedArticle.length===0){
+        return NextResponse.json({message:"article not found"},{status:404})
+    }
+    return NextResponse.json({message:"Article updated",article:updatedArticle[0]},{status:200})
+
+  }catch(error) {
+    return NextResponse.json({message:"internal server error"},{status:500})
+  }
 
 }
 /**
@@ -49,13 +76,21 @@ export async function PUT(request:NextRequest,{params:{id}}:Props) {
 * @access  public  
 */
 export async function DELETE(request:NextRequest,{params:{id}}:Props) {
-
-    const article=Articles.find((a)  => a.id===parseInt(id));
-    if(!article) {
-        return NextResponse.json({message:"Article not found"},{status:404})
+try {
+    const articleId=parseInt(id)
+    if(isNaN(articleId)){
+        return NextResponse.json({message:"Invalid Id"},{status:400})
     }
-    return NextResponse.json({message:"Article Deleted"},{status:200})
+    const deleted=await db.delete(ArticleTable).where(eq(ArticleTable.id,articleId)).returning();
+    if(deleted.length===0){
+        return NextResponse.json({message:"article not found"},{status:404})
+    }
+    return NextResponse.json({message:"article deleted",article:deleted[0]},{status:200})
 
+}catch(error) {
+    return NextResponse.json({message:"Internal server error"},{status:500})
+
+}
 
 }
 
