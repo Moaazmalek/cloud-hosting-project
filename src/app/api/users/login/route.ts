@@ -4,7 +4,9 @@ import { LoginUserDto } from "@/utils/dtos";
 import { ValidateLoginSchema } from "@/utils/validationSchemas";
 import { eq } from "drizzle-orm";
 import { NextResponse, NextRequest } from "next/server";
-import bcrypt from 'bcryptjs'
+import bcrypt from "bcryptjs";
+import { setCookie } from "@/utils/generateToken";
+
 //route handlers
 /**
  * @method POST
@@ -22,21 +24,49 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    const user=await db.query.UserTable.findFirst({
-        where:eq(UserTable.email,body.email)
-    })
-    if(!user) {
-      
-        return NextResponse.json({message:"invalid email or password"},{status:400})
+    const user = await db.query.UserTable.findFirst({
+      where: eq(UserTable.email, body.email),
+    });
+    if (!user) {
+      return NextResponse.json(
+        { message: "invalid email or password" },
+        { status: 400 }
+      );
     }
-    const validePassword=await bcrypt.compare(body.password,user.password)
-    if(!validePassword) {
-        return NextResponse.json({message:"invalid email or password"},{status:400})
+    const validePassword = await bcrypt.compare(body.password, user.password);
+    if (!validePassword) {
+      return NextResponse.json(
+        { message: "invalid email or password" },
+        { status: 400 }
+      );
     }
-    //@Todo -> generate JWT Token
-    const token=null;
+    const jwtPayload = {
+      id: user.id,
+      isAdmin: user.isAdmin,
+      username: user.username,
+    };
 
-    return NextResponse.json({message:"Authenticated",token},{status:200})
+    // const token = generateJWT(jwtPayload);
+
+    // const cookie=serialize("jwtToken",token,{
+    //   httpOnly:true,
+    //   secure:process.env.NODE_ENV === 'production' ,
+    //   sameSite:'strict',
+    //   path:'/',//all paths can use this cookie,
+    //   maxAge:60 * 60 * 24 * 30 // one month,
+    // })
+    const cookie=setCookie(jwtPayload)
+
+
+    return NextResponse.json(
+      { message: "Authenticated" },
+      { status: 200 ,
+        headers:{
+          "Set-Cookie":cookie
+        }
+       }
+    );
+    
   } catch (error) {
     return NextResponse.json(
       { message: "internal server error" },

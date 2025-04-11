@@ -4,7 +4,7 @@ export const UserTable =pgTable("user",{
     //auto increment
     id:serial("id").primaryKey(),
     email:varchar('email',{length:255}).notNull().unique(),
-    username:varchar('username',{length:100}),
+    username:varchar('username',{length:100}).notNull(),
     password:text('password').notNull(),
     isAdmin:boolean('is_admin').notNull().default(false),
     createdAt:timestamp('created_at').defaultNow(),

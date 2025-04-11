@@ -29,3 +29,9 @@ export const CreateArticleFormSchema =z.object({
   description:z.string().describe("Title").min(1,{message:"Description is required"}),
 })
 
+export type JWTPayload= {
+    id:number,
+    isAdmin:boolean,
+    username:string
+}
+
