@@ -23,3 +23,12 @@ export interface UpdateUserDto {
     password?:string
 
 }
+export interface CreateCommentDto {
+    text:string,
+    articleId:number,
+    // userId:number
+} 
+export interface UpdateCommentDto {
+    text:string,
+    
+}
