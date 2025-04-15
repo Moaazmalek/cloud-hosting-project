@@ -4,7 +4,9 @@ export type Article = {
     userId: number;
     id: number;
     title: string;
-    body: string;
+    description: string;
+    createdAt:Date,
+    updatedAt:Date,
   };
 
 
@@ -21,8 +23,15 @@ export const RegisterSchema=z.object({
   message:"Password don't match.",
   path:['confirmPassword']
 })
+
 export const CreateArticleFormSchema =z.object({
   title:z.string().describe("Title").min(1,{message:"Title is required"}),
-  body:z.string().describe("Title").min(1,{message:"Description is required"}),
+  description:z.string().describe("Title").min(1,{message:"Description is required"}),
 })
+
+export type JWTPayload= {
+    id:number,
+    isAdmin:boolean,
+    username:string
+}
 
