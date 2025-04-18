@@ -31,10 +31,10 @@ const LoginForm = () => {
       onSubmit={handleSubmit(onLoginSubmit)}
     >
       <div className="mb-4 text-base flex flex-col gap-1">
-        <label className=" border p-2 w-full h-full ">
+        <label className=" border  w-full h-full ">
           <input
             {...register("email")}
-            className="w-full border-none outline-none pl-2"
+            className="w-full border-none outline-none pl-2 p-2"
             type="email"
             placeholder="Email"
           />
@@ -46,10 +46,10 @@ const LoginForm = () => {
         )}
       </div>
       <div className="mb-4 text-base flex flex-col gap-1">
-        <label className="border p-2 w-full h-full">
+        <label className="border w-full h-full">
           <input
             {...register("password")}
-            className="w-full border-none outline-none pl-2"
+            className="w-full border-none outline-none pl-2 p-2"
             type="password"
             placeholder="Password"
           />
@@ -62,7 +62,7 @@ const LoginForm = () => {
       </div>
       <button
         type="submit"
-        className="text-xl text-white bg-primary-normal  rounded-lg font-bold self-center px-5 py-2"
+        className="text-xl text-primary-text bg-primary-card  rounded-lg font-bold self-center px-5 py-2"
       >
         Login
       </button>

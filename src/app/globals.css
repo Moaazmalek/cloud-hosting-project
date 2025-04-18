@@ -5,8 +5,9 @@
   height:100%
  }
 :root {
-  --bg-color: #efefef;
-  --bg-primary: rgb(176, 15, 176);
+  --bg-color: @apply bg-primary-gray-light;
+  --bg-primary: @apply bg-primary-dark;
+  
 
   
 }
@@ -19,4 +20,6 @@ body {
   margin: 0;
   box-sizing: border-box;
 }
-
+.envfile {
+  background-color: rgb(9, 33, 58);
+}

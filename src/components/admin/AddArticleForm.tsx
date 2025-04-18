@@ -57,7 +57,7 @@ const AddArticleForm = () => {
       </div>
       <button
         type="submit"
-        className="text-xl text-white bg-primary-normal hover:bg-primary-dark  rounded-lg font-bold self-center px-5 py-2"
+        className="text-xl text-primary-text bg-primary-background hover:bg-primary-dark  rounded-lg font-bold self-center px-5 py-2"
       >
         Add
       </button>

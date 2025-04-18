@@ -5,16 +5,24 @@ import { CreateArticleSchema } from "@/utils/validationSchemas";
 import { CreateArticleDTO } from "@/utils/dtos";
 import { db } from "@/lib/database/db";
 import { ArticleTable } from "@/lib/drizzle/schema";
+import { verifyToken } from "@/utils/verifyToken"; 
 //route handlers
 /**
  * @method GET
  * @route ~/api/articles
- * @description GET all articles
+ * @description GET articles by page number
  * @access  public
  */
 export async function GET(request: NextRequest) {
   try {
-    const articles:Article[]=await db.query.ArticleTable.findMany()
+    const pageNumber=request.nextUrl.searchParams.get("pageNumber") || "1"
+    const pageSize=6;
+    const offset=(parseInt(pageNumber) - 1) * pageSize;
+    
+    const articles:Article[]=await db.query.ArticleTable.findMany({
+      limit:pageSize,
+      offset
+    })
    if(!articles) {
     return NextResponse.json({message:"articles not found"},{status:404})
    }
@@ -37,6 +45,10 @@ export async function POST(request: NextRequest) {
   //the body from json
 
   try {
+    const user=verifyToken(request);
+    if(!user) {
+      return NextResponse.json({message:"not allowed, access denied"},{status:401})
+    }
     const body=await request.json() as CreateArticleDTO;
 
 const validation=CreateArticleSchema.safeParse(body)
@@ -46,7 +58,7 @@ if(!validation.success){
  const newArticle=await db.insert(ArticleTable).values({
   title:body.title,
   description:body.description,
-  userId:1
+  userId:user.id
  }).returning() 
  return NextResponse.json({newArticle:newArticle[0]}, { status: 201 });
   } catch (error) {

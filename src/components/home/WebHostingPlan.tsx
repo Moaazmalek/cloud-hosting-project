@@ -3,15 +3,15 @@ import { TiTick } from 'react-icons/ti';
 const WebHostingPlan = () => {
   return (
     <div className='flex flex-col items-center justify-center w-3/4 rounded p-4 bg-gray-200 mb-7 md:w-2/4 lg:w-1/4'>
-        <h3 className='text-3xl font-bold text-purple-900'>Premium</h3>
-        <strong className='text-3xl font-bold text-gray-900 my-5'>
+        <h3 className='text-3xl font-bold text-primary-accent '>Premium</h3>
+        <strong className='text-3xl font-bold text-primary-text my-5'>
             $4.99/mo
         </strong>
         <span className='bg-red-200 text-red-900 rounded-full px-2 py-1 font-semibold'>
             10% OFF
         </span>
         <div className='mt-6'>
-            <h5 className='text-2xl mb-1 font-semibold text-purple-700'>
+            <h5 className='text-2xl mb-1 font-semibold text-primary-accent '>
                 Top Features
             </h5>
             <div className='flex items-center text-green-700 mb-1 ps-3'>

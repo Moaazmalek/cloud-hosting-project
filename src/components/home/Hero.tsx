@@ -23,7 +23,7 @@ const Hero = () => {
         </div>
       </div>
       {/**Cloud hosting image */}
-      <div >
+      <div className="">
         <Image 
         src="/cloud-hosting.png"
         alt="Cloud hosting Image"

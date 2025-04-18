@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { verifyToken } from "@/utils/verifyToken";
 import { UpdateUserDto } from "@/utils/dtos";
+import { updatedUserSchema } from "@/utils/validationSchemas";
 
 interface Props {
   params: {
@@ -108,14 +109,15 @@ export async function PUT(request: NextRequest, { params }: Props) {
       );
     }
     const body = (await request.json()) as UpdateUserDto;
+    const validation = updatedUserSchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(
+        { message: validation.error.errors[0].message },
+        { status: 400 }
+      );
+    }
 
     if (body.password) {
-      if (body.password.length < 6) {
-        return NextResponse.json(
-          { message: "password should be minimum 6 characters" },
-          { status: 400 }
-        );
-      }
       const salt = await bcrypt.genSalt(10);
       body.password = await bcrypt.hash(body.password, salt);
     }

@@ -11,8 +11,13 @@ const config: Config = {
       colors:{
         
         primary:{
-          dark:"rgb(132, 14, 132)",
-          normal:"rgb(176, 15, 176)"
+         primary:"rgb(7,71,166)",
+         accent:"rgb(0,82,204)",
+         sidebar:"rgb(23,43,77)",
+         background:"rgb(244,245,247)",
+         text:"rgb(23,43,77)",
+         card:"rgb(255,255,255)",
+         ["muted-text"]:"rgb(107,119,140)"
         }
 
       },

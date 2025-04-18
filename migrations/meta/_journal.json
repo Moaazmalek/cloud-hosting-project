@@ -8,6 +8,34 @@
       "when": 1744120675666,
       "tag": "0000_real_abomination",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1744965080593,
+      "tag": "0001_bitter_living_lightning",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1744979438092,
+      "tag": "0002_fancy_hellion",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1744979665912,
+      "tag": "0003_worthless_beyonder",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1744980292004,
+      "tag": "0004_slippery_stellaris",
+      "breakpoints": true
     }
   ]
 }

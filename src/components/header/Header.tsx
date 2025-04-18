@@ -5,7 +5,7 @@ import styles from "./header.module.css";
 import Navbar from "./Navbar";
 const Header = () => {
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} dark:bg-primary-gray-light bg-primary-background`}>
       <Navbar/>
       <div className={styles.right}>
         <Link href="/login" className={styles.btn}>

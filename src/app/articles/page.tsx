@@ -11,7 +11,7 @@ export const metadata:Metadata = {
 }
 const ArticlePage = async () => {
   await new Promise((resolve) => setTimeout(resolve, 2000))
-  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const response = await fetch(`http://localhost:3000/api/articles?pageNumber=${2}`);
   let articles: Article[] = [];
   if(!response.ok) {
     throw new Error("Failed to fetch articles")
@@ -26,7 +26,7 @@ const ArticlePage = async () => {
      <SearchArticleInput/>
      </div>
   <div className="flex justify-center flex-wrap gap-7 ">
-  {articles.slice(0,6).map((item) => (
+  {articles.map((item) => (
         <ArticleItem article={item} key={item.id}/>
       ))}
   </div>
