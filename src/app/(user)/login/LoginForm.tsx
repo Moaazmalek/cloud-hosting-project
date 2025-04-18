@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/utils/types";
 import { toast } from "react-toastify";
 import {useRouter} from 'next/navigation'
+import Loading from "@/app/loading";
 type LoginType = z.infer<typeof LoginSchema>;
 
 const LoginForm = () => {
@@ -27,7 +28,7 @@ const LoginForm = () => {
   };
   return (
     <form
-      className="flex flex-col space-y-4   h-full  "
+      className="flex flex-col space-y-4   h-full text-primary-text "
       onSubmit={handleSubmit(onLoginSubmit)}
     >
       <div className="mb-4 text-base flex flex-col gap-1">
@@ -64,7 +65,7 @@ const LoginForm = () => {
         type="submit"
         className="text-xl text-primary-text bg-primary-card  rounded-lg font-bold self-center px-5 py-2"
       >
-        Login
+        {isSubmitting ? <Loading/>:"Login"}
       </button>
     </form>
   );
