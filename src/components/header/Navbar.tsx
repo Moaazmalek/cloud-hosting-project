@@ -30,7 +30,7 @@ const Navbar = () => {
           <Link href="/" className={styles.navLink} onClick={() => setToggle(false)}>
             Home
           </Link>
-          <Link href="/articles" className={styles.navLink} onClick={() => setToggle(false)}>
+          <Link href="/articles?pageNumber=1" className={styles.navLink} onClick={() => setToggle(false)}>
             Articles
           </Link>
           <Link href="/about" className={styles.navLink} onClick={() => setToggle(false)}>

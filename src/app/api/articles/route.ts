@@ -23,9 +23,11 @@ export async function GET(request: NextRequest) {
       limit:pageSize,
       offset
     })
+    
    if(!articles) {
     return NextResponse.json({message:"articles not found"},{status:404})
    }
+   
     return NextResponse.json(articles, { status: 200 });
 
   }catch(error) {
